@@ -14,8 +14,7 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
 
 def hewwwo(texty_wexty):
-    return texty_wexty
-      .lower() \
+    return texty_wexty.lower() \
       .replace("you ", "uwu ") \
       .replace("bulge", "bulgie wulgie") \
       .replace("r", "w") \
