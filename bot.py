@@ -16,7 +16,7 @@ async def on_ready():
 def hewwwo(texty_wexty):
     return texty_wexty
       .lower()
-      .replace("you ", "uwu")
+      .replace("you ", "uwu ")
       .replace("bulge", "bulgie wulgie")
       .replace("r", "w")
       .replace("l", "w")
