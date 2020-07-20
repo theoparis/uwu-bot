@@ -14,18 +14,19 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
 
 def hewwwo(texty_wexty):
-    texty_wexty = texty_wexty.lower()
-    texty_wexty = texty_wexty.replace("!uwu ", "")
-    texty_wexty = texty_wexty.replace("bulge", "bulgie wulgie")
-    texty_wexty = texty_wexty.replace("r", "w")
-    texty_wexty = texty_wexty.replace("l", "w")
-    texty_wexty = texty_wexty.replace("uck", "ucky wucky")
     return texty_wexty
+      .lower()
+      .replace("you ", "uwu")
+      .replace("bulge", "bulgie wulgie")
+      .replace("r", "w")
+      .replace("l", "w")
+      .replace("l", "w")
+      .replace("uck", "ucky wucky")
 
 @bot.command(name='uwu')
 async def uwu(ctx):
     await ctx.message.delete()
-    await ctx.send(hewwwo(ctx.message.content))
+    await ctx.send(hewwwo(ctx.message.content.replace("!uwu ", "")))
     #await ctx.message.edit(content=hewwwo(ctx.message.content))
     
 bot.run(TOKEN)
