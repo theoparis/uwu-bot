@@ -8,4 +8,4 @@ Fiwst, cwonie wonie the wepositowy, obviouswy. Then uwu'ww need tuwu cweate a.en
 UWU_TOKEN=youwtoken1234
 ```
 
-Then you can run it with `python3 bot.py`.
+Then uwu cawn wun iwt with `python3 bot.py`.
