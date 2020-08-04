@@ -22,14 +22,16 @@ client.once("ready", () => {
 client.login(process.env.BOT_TOKEN || config.token);
 
 const prefix = process.env.PREFIX || config.prefix;
-let currentChannel = process.env.DEFAULT_CHANNEL || config.defaultChannel || "";
+let channels = config.channels || [];
 
 rl.on("line", (d) => {
     try {
-        const channel = client.channels.cache.find(
-            (c) => c.id === currentChannel,
-        );
-        if (channel) channel.send(d);
+        channels.forEach((currentChannel) => {
+            const channel = client.channels.cache.find(
+                (c) => c.id === currentChannel,
+            );
+            if (channel) channel.send(d);
+        });
     } catch {}
 });
 
@@ -43,7 +45,7 @@ client.on("message", (message) => {
         "$&",
     );
 
-    currentChannel = message.channel.id;
+    if (!channels[0]) channels[0] = message.channel.id;
 
     if (command === "uwu") {
         if (!args.length) {
@@ -53,6 +55,10 @@ client.on("message", (message) => {
         }
 
         message.delete();
-        message.channel.send(hewwwo(message.content.replace(new RegExp(`/\\${prefix}\w* /`, ""))));
+        message.channel.send(
+            hewwwo(
+                message.content.replace(new RegExp(`/\\${prefix}\w* /`, "")),
+            ),
+        );
     }
 });
