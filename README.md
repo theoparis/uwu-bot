@@ -9,6 +9,7 @@ Fiwst, cwonie wonie the wepositowy, obviouswy. Next uwu shouwd instaww the depen
     "token": "youwtoken1234",
     "prefix": "!",
     "channels": ["optionalchannelid"]
+}
 ```
 
 The channews fiewd iws fow specifying 
