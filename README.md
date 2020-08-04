@@ -2,7 +2,7 @@
 pwease invite me uwu 
 
 # sewf hosting iwt
-Fiwst, cwonie wonie the wepositowy, obviouswy. Next uwu shouwd instaww the dependencies with `npm instaww`. Then uwu'ww need tuwu cweate a `config.json` fiwe in the woot of the pwoject awnd entew youw discowd bot token intwo iwt wike so:
+Fiwst, cwonie wonie the wepositowy, obviouswy. Next uwu shouwd instaww the dependencies with `npm install`. Then uwu'ww need tuwu cweate a `config.json` fiwe in the woot of the pwoject awnd entew youw discowd bot token intwo iwt wike so:
 
 ```
 {
