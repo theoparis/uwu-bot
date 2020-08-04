@@ -1,0 +1,27 @@
+{
+    "name": "uwu-bot",
+    "version": "1.0.0",
+    "description": "pwease invite me uwu",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/creepinson/uwu-bot.git"
+    },
+    "keywords": [
+        "discord",
+        "bot",
+        "discord-bot"
+    ],
+    "author": "Theo Paris",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/creepinson/uwu-bot/issues"
+    },
+    "homepage": "https://github.com/creepinson/uwu-bot#readme",
+    "dependencies": {
+        "discord.js": "^12.2.0"
+    }
+}

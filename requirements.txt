@@ -1,3 +1,0 @@
-hewwwo
-discord
-python-dotenv
