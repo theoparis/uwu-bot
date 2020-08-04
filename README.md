@@ -16,3 +16,5 @@ The channews fiewd iws fow specifying
 channew id's tuwu use whewn uwu entew text in the consowe - which wiww send a message tuwu those channews.
 
 Finally, uwu cawn wun iwt with `node src/index.js`.
+
+Update: [I have now made the bot inviteable](https://discord.com/api/oauth2/authorize?client_id=273160658030428180&permissions=0&scope=bot)
