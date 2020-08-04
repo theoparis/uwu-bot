@@ -53,6 +53,6 @@ client.on("message", (message) => {
         }
 
         message.delete();
-        message.channel.send(hewwwo(text.replace(new RegExp(`/\\${prefix}\w* /`, ""))));
+        message.channel.send(hewwwo(message.content.replace(new RegExp(`/\\${prefix}\w* /`, ""))));
     }
 });
