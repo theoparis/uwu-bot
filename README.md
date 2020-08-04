@@ -17,4 +17,4 @@ channew id's tuwu use whewn uwu entew text in the consowe - which wiww send a me
 
 Finally, uwu cawn wun iwt with `node src/index.js`.
 
-Update: [I have now made the bot inviteable](https://discord.com/api/oauth2/authorize?client_id=273160658030428180&permissions=0&scope=bot)
+Update: [I have now made the bot inviteable](https://discord.com/api/oauth2/authorize?client_id=273160658030428180&permissions=2048&scope=bot)
