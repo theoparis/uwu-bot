@@ -41,11 +41,11 @@ rl.on("line", (d) => {
 
 client.on("message", (message: Message) => {
     const regex = new RegExp(
-        `(?:${prefix}|!)${/(\w+)\s+((?:[^!]|(?:(?<!\s)!))*)/.source}`,
+        `${prefix}?${/(\w+)\s+((?:[^!]|(?<!\s)!)*)/.source}`,
         "g",
     );
-    const matches = message.content.match(regex);
-
+    const matches = message.content.matchAll(regex);
+    ``;
     // No matches
     if (matches === null) return;
 
@@ -53,19 +53,23 @@ client.on("message", (message: Message) => {
 
     let result = "";
 
-    // Code block, don't uwuify
-    if (matches.some((m: string) => m.includes("`"))) return;
+    for (let match of matches) {
+        match = match.slice(1);
+        console.log(JSON.stringify(match));
 
-    matches.forEach((m: string) => {
-        const commandRegex = new RegExp(`(?:${prefix}|!)${/(\w+)\s+/.source}`);
-        const commands = m.match(commandRegex)!.slice(1);
-        commandRegex.lastIndex = 0;
-        for (let command of commands) {
-            const rawMessage = m.replace(commandRegex, "");
+        // Code block, don't uwuify
+        if (match.some((m: string) => m.includes("`"))) return;
+
+        for (let command of match) {
+            const commandRegex = new RegExp(`${prefix}?${/(\w+)\s+/.source}`);
+            commandRegex.lastIndex = 0;
+            const rawMessage = command.replace(commandRegex, "");
             console.log(`cmd: ${command}, msg: ${rawMessage}`);
+            // if (rawMessage == "") continue;
             if (command === "uwu") result += hewwwo(rawMessage);
+            else result += `!${command} ${rawMessage}`;
         }
-    });
+    }
     if (result !== "") {
         message.delete();
         message.channel.send(result);
