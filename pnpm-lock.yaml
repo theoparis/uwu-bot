@@ -1,4 +1,5 @@
 dependencies:
+  '@types/node': 14.0.27
   discord.js: 12.2.0
   ts-node: 8.10.2_typescript@3.9.7
 devDependencies:
@@ -19,6 +20,10 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-ZfFsbgEXW71Rw/6EtBdrP5VxBJy4dthyC0tpQKGKmYFImlmmrykO14Za+BiIVduwjte0jXEBlhSKf0MWbFp9Eg==
+  /@types/node/14.0.27:
+    dev: false
+    resolution:
+      integrity: sha512-kVrqXhbclHNHGu9ztnAwSncIgJv/FaxmzXJvGXNdcCpV1b8u1/Mi6z6m0vwy0LzKeXFTPLH0NzwmoJ3fNCIq0g==
   /abort-controller/3.0.0:
     dependencies:
       event-target-shim: 5.0.1
@@ -207,6 +212,7 @@ packages:
     resolution:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 specifiers:
+  '@types/node': ^14.0.27
   discord.js: ^12.2.0
   ts-node: ^8.10.2
   typescript: ^3.9.7
