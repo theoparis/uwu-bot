@@ -22,7 +22,7 @@ client.once("ready", () => {
     console.log("Ready!");
 });
 
-client.login(process.env.BOT_TOKEN || config.token);
+client.login(process.env.TOKEN || config.token);
 
 const prefix = process.env.PREFIX || config.prefix || "!!";
 let channels = config.channels || [];
