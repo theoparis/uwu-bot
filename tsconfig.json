@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es2019",
         "module": "CommonJS",
-        "lib": ["es2020.string"],
+        "lib": ["es2020.string", "ES2019"],
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "strict": true,
