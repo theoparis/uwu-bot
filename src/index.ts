@@ -69,10 +69,12 @@ client.on("message", async (message: Message) => {
         // const rawMessage = command.replace(commandRegex, "");
         console.log(`cmd: ${command}`);
         if (command === "uwu") result += hewwwo(rawMessage);
+        else result += `${command} ${rawMessage}`;
     }
 
     if (result !== "") {
         message.delete();
-        message.channel.send(result);
+        const msg = await message.channel.send(result);
+        if (message.author.bot) msg.delete();
     }
 });
