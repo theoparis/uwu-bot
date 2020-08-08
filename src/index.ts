@@ -75,6 +75,8 @@ client.on("message", async (message: Message) => {
     if (result !== "") {
         message.delete();
         const msg = await message.channel.send(result);
-        if (message.author.bot) msg.delete();
+        setTimeout(() => {
+            if (message.author.bot) msg.delete();
+        }, 150);
     }
 });
