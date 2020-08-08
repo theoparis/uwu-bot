@@ -2,7 +2,6 @@ dependencies:
   '@types/node': 14.0.27
   discord.js: 12.2.0
   ts-node: 8.10.2_typescript@3.9.7
-devDependencies:
   typescript: 3.9.7
 lockfileVersion: 5.1
 packages:
@@ -185,7 +184,7 @@ packages:
     resolution:
       integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
   /typescript/3.9.7:
-    dev: true
+    dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true
