@@ -1,9 +1,11 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "commonjs",
+        "target": "es2019",
+        "module": "CommonJS",
+        "lib": ["es2020.string"],
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
+        "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "outDir": "dist"
