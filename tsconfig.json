@@ -1,8 +1,15 @@
 {
+    "ts-node": {
+        "files": true
+    },
     "compilerOptions": {
         "target": "es2019",
         "module": "CommonJS",
-        "lib": ["es2020.string", "ES2019", "DOM"],
+        "lib": [
+            "es2020.string",
+            "ES2019",
+            "DOM"
+        ],
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "strict": true,
@@ -10,5 +17,7 @@
         "skipLibCheck": true,
         "outDir": "dist"
     },
-    "include": ["src"]
+    "include": [
+        "src"
+    ]
 }
