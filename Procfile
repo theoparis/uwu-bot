@@ -1,1 +1,1 @@
-worker: node dist
+worker: npm run start
