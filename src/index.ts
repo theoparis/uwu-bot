@@ -45,7 +45,7 @@ client.on("message", async (message: Message) => {
     if (message.author.id === client.user?.id) return;
     const regex = new RegExp(`(${prefix}?\\w+)\\s+((?:\\w)*)`, "g");
     // regex.lastIndex = 0;
-    const matches = message.content.match(regex);
+    const matches = message.content.matchAll(regex);
     // No matches
     if (matches === null) return;
 
@@ -53,63 +53,68 @@ client.on("message", async (message: Message) => {
 
     let result = "";
     let vm: NodeVM | undefined;
-    // for (let command of match) {
-    const command = matches[0].replace(prefix, "");
-    const rawMessage = matches[1];
-    const args = message.content.replace(matches[0], "").slice(1).split(" ");
-    // const commandRegex = new RegExp(`(${prefix}?\\w+)`);
-    // const rawMessage = command.replace(commandRegex, "");
-    console.log(`cmd: ${command}, msg: ${rawMessage}`);
-    if (command === "uwu") {
-        result += hewwwo(rawMessage);
-    } else if (command === "purge" && args[0]) {
-        if (message.channel.type == "text") {
-            try {
-                const messageCount = parseInt(args[0]) + 1 || 0;
-                if (messageCount !== 0) {
-                    const messages = await message.channel.messages.fetch({
-                        limit: messageCount,
-                    });
 
-                    message.channel.bulkDelete(messages);
+    for (let match of matches) {
+        match = match.slice(1);
 
-                    result += `Purged ${args[0]} messages`;
+        // for (let command of match) {
+        const command = match[0].replace(prefix, "");
+        const rawMessage = match[1];
+        const args = message.content.replace(match[0], "").slice(1).split(" ");
+        // const commandRegex = new RegExp(`(${prefix}?\\w+)`);
+        // const rawMessage = command.replace(commandRegex, "");
+        console.log(`cmd: ${command}, msg: ${rawMessage}`);
+        if (command === "uwu") {
+            result += hewwwo(rawMessage);
+        } else if (command === "purge" && args[0]) {
+            if (message.channel.type == "text") {
+                try {
+                    const messageCount = parseInt(args[0]) + 1 || 0;
+                    if (messageCount !== 0) {
+                        const messages = await message.channel.messages.fetch({
+                            limit: messageCount,
+                        });
+
+                        message.channel.bulkDelete(messages);
+
+                        result += `Purged ${args[0]} messages`;
+                    }
+                } catch (e) {
+                    result += "Purge error";
+                    console.log(e);
                 }
-            } catch (e) {
-                result += "Purge error";
-                console.log(e);
             }
-        }
-    } else if (command === "eval") {
-        try {
-            // Admin check to make sure user has perms to eval code with the bot object, otherwise don't include the bot object
-            if (
-                message.member &&
-                message.member.id ===
-                    (process.env.BOT_OWNER ||
-                        config.botOwner ||
-                        "140296096839630848")
-            ) {
-                if (process.env.DEBUG === "true" || config.debug === true)
-                    console.log("Admin executed eval!");
-                vm = new NodeVM({
-                    require: {
-                        external: true,
-                    },
-                    sandbox: {
-                        _bot: client,
-                        _message: message,
-                    },
-                });
-            } else
-                vm = new NodeVM({
-                    require: {
-                        external: true,
-                    },
-                });
-            result += rawMessage;
-        } catch (e) {
-            result += e.toString();
+        } else if (command === "eval") {
+            try {
+                // Admin check to make sure user has perms to eval code with the bot object, otherwise don't include the bot object
+                if (
+                    message.member &&
+                    message.member.id ===
+                        (process.env.BOT_OWNER ||
+                            config.botOwner ||
+                            "140296096839630848")
+                ) {
+                    if (process.env.DEBUG === "true" || config.debug === true)
+                        console.log("Admin executed eval!");
+                    vm = new NodeVM({
+                        require: {
+                            external: true,
+                        },
+                        sandbox: {
+                            _bot: client,
+                            _message: message,
+                        },
+                    });
+                } else
+                    vm = new NodeVM({
+                        require: {
+                            external: true,
+                        },
+                    });
+                result += rawMessage;
+            } catch (e) {
+                result += e.toString();
+            }
         }
     }
 
