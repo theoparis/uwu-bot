@@ -67,13 +67,14 @@ client.on("message", async (message: Message) => {
 
     let result = "";
     let vm: NodeVM | undefined;
+    let log = "";
 
     for (let match of matches) {
         match = match.slice(1);
 
         // for (let command of match) {
         const command = match[0].replace(prefix, "");
-        let rawMessage = match[1];
+        const rawMessage = match[1];
         const args = message.content.replace(match[0], "").slice(1).split(" ");
         // const commandRegex = new RegExp(`(${prefix}?\\w+)`);
         // const rawMessage = command.replace(commandRegex, "");
@@ -125,7 +126,7 @@ client.on("message", async (message: Message) => {
                             _message: message,
                             console: {
                                 log: (message: string) =>
-                                    (rawMessage += `${message}\n`),
+                                    (log += `${message}\n`),
                             },
                         },
                     });
@@ -137,7 +138,7 @@ client.on("message", async (message: Message) => {
                         sandbox: {
                             console: {
                                 log: (message: string) =>
-                                    (rawMessage += `${message}\n`),
+                                    (log += `${message}\n`),
                             },
                         },
                     });
@@ -165,6 +166,7 @@ client.on("message", async (message: Message) => {
                         : JSON.stringify(result);
                 if (result && result.trim() === "")
                     result = "No response from code.";
+                else result += log;
             } catch (err) {
                 result = `Error: \n${err.message}`;
             }
