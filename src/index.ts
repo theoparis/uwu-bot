@@ -164,7 +164,7 @@ client.on("message", async (message: Message) => {
                     typeof result === "string"
                         ? result
                         : JSON.stringify(result);
-                result = result.replace("undefined", "");
+                if (!result) result = "";
                 result += log;
                 if (result && result.trim() === "")
                     result = "No response from code.";
