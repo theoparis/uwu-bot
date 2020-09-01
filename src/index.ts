@@ -55,7 +55,7 @@ rl.on("line", (d) => {
 client.on("message", async (message: Message) => {
     if (message.author.id === client.user?.id) return;
     const regex = new RegExp(
-        `(${prefix}?\\w+)\\s*((?:\\s*\\w*"*\\.*;*)*)`,
+        `(${prefix}?\\w+)\\s*((?:\\s*\\w*"*\\.*;*\`*)*)`,
         "g",
     );
     // regex.lastIndex = 0;
@@ -148,7 +148,8 @@ client.on("message", async (message: Message) => {
                 ),
                 mainPath(),
             )();
-            result = JSON.stringify(result);
+            result =
+                typeof result === "string" ? result : JSON.stringify(result);
             if (result.trim() === "") result = "No reponse from code.";
         }
 
