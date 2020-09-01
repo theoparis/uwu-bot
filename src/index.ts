@@ -140,19 +140,24 @@ client.on("message", async (message: Message) => {
 
     if (result !== "") {
         if (vm) {
-            result = await vm.run(
-                asyncify(
-                    result
-                        .replace(/(`|```)+.*(?:\s)/, "")
-                        .replace(/```(\\s|\n)/, ""),
-                ),
-                mainPath(),
-            )();
-            result =
-                typeof result === "string" ? result : JSON.stringify(result);
-            if (result.trim() === "") result = "No reponse from code.";
+            try {
+                result = await vm.run(
+                    asyncify(
+                        result
+                            .replace(/(`|```)+.*(?:\s)/, "")
+                            .replace(/```(\\s|\n)/, ""),
+                    ),
+                    mainPath(),
+                )();
+                result =
+                    typeof result === "string"
+                        ? result
+                        : JSON.stringify(result);
+                if (result.trim() === "") result = "No reponse from code.";
+            } catch (err) {
+                result = `Error: \n${err.message}`;
+            }
         }
-
         // Code block check
         if (!vm && result.includes("`")) return;
         const msg = await message.channel.send(result);
