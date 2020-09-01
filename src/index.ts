@@ -169,7 +169,7 @@ client.on("message", async (message: Message) => {
                 if (result && result.trim() === "")
                     result = "No response from code.";
             } catch (err) {
-                result = `Error: \n${err.message}`;
+                result = `Error: \n${err}`;
             }
         }
         // Code block check
