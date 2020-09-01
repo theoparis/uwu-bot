@@ -123,12 +123,22 @@ client.on("message", async (message: Message) => {
                         sandbox: {
                             _bot: client,
                             _message: message,
+                            console: {
+                                log: (message: string) =>
+                                    (result += `${message}\n`),
+                            },
                         },
                     });
                 } else
                     vm = new NodeVM({
                         require: {
                             external: true,
+                        },
+                        sandbox: {
+                            console: {
+                                log: (message: string) =>
+                                    (result += `${message}\n`),
+                            },
                         },
                     });
                 result += rawMessage;
