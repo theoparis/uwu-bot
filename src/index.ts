@@ -153,11 +153,7 @@ client.on("message", async (message: Message) => {
         if (vm) {
             try {
                 result = await vm.run(
-                    asyncify(
-                        result
-                            .replace(/(`|```)+.*(?:\s)/, "")
-                            .replace(/```(\\s|\n)/, ""),
-                    ),
+                    asyncify(result.replace("`", "")),
                     mainPath(),
                 )();
                 result =
