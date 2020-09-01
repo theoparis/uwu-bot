@@ -77,9 +77,9 @@ client.on("message", async (message: Message) => {
         console.log(`cmd: ${command}, msg: ${rawMessage}`);
         if (command === commands.get("help")) {
             let msg = `Commands: \n`;
-            for (let c in commands.values) {
+            commands.forEach((c) => {
                 msg += `- ${c}\n`;
-            }
+            });
             result += msg;
         } else if (command === commands.get("uwu")) {
             result += hewwwo(rawMessage);
