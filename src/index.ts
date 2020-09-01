@@ -163,7 +163,8 @@ client.on("message", async (message: Message) => {
                     typeof result === "string"
                         ? result
                         : JSON.stringify(result);
-                if (result.trim() === "") result = "No response from code.";
+                if (result && result.trim() === "")
+                    result = "No response from code.";
             } catch (err) {
                 result = `Error: \n${err.message}`;
             }
