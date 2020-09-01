@@ -167,6 +167,7 @@ client.on("message", async (message: Message) => {
             } catch (err) {
                 result = `Error: \n${err}`;
             }
+            result = "```" + result + "```";
         }
         // Code block check
         if (!vm && result.includes("`")) return;
