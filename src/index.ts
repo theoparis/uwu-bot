@@ -80,7 +80,7 @@ client.on("message", async (message: Message) => {
             for (let c in commands.values) {
                 msg += `- ${c}\n`;
             }
-            message.channel.send(msg);
+            result += msg;
         } else if (command === commands.get("uwu")) {
             result += hewwwo(rawMessage);
         } else if (command === "purge" && args[0]) {
