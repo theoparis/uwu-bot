@@ -55,7 +55,7 @@ rl.on("line", (d) => {
 client.on("message", async (message: Message) => {
     if (message.author.id === client.user?.id) return;
     const regex = new RegExp(
-        `(${prefix}?\\w+)\\s*((?:\\s*\\w*"*\\.*;*\`*[(]*[)]*)*)`,
+        `(${prefix}?\\w+)\\s*((?:[^${prefix}]|(?<!${prefix}))*)`,
         "g",
     );
     // regex.lastIndex = 0;
@@ -153,7 +153,11 @@ client.on("message", async (message: Message) => {
         if (vm) {
             try {
                 result = await vm.run(
-                    asyncify(result.replace("`", "")),
+                    asyncify(
+                        result
+                            .replace(/(`|```)+.*(?:\s)/, "")
+                            .replace(/```(\\s|\n)/, ""),
+                    ),
                     mainPath(),
                 )();
                 result =
