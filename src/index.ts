@@ -26,9 +26,9 @@ try {
 
 let commands: Map<string, string> = new Map();
 
-addDefaultCommands(commands);
-
 if (config.commands) config.commands.forEach((c, k) => commands.set(k, c));
+
+addDefaultCommands(commands);
 
 client.once("ready", () => {
     console.log("Ready!");
@@ -54,7 +54,7 @@ rl.on("line", (d) => {
 
 client.on("message", async (message: Message) => {
     if (message.author.id === client.user?.id) return;
-    const regex = new RegExp(`(${prefix}?\\w+)\\s+((?:\\w)*)`, "g");
+    const regex = new RegExp(`(${prefix}?\w+)\s+((?:\w)*)`, "g");
     // regex.lastIndex = 0;
     const matches = message.content.matchAll(regex);
     // No matches
