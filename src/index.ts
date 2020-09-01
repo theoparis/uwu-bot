@@ -43,7 +43,7 @@ rl.on("line", (d) => {
 
 client.on("message", async (message: Message) => {
     if (message.author.id === client.user?.id) return;
-    const regex = new RegExp(`(${prefix}?\\w+)\\s+((?:\w)*)`, "g");
+    const regex = new RegExp(`(${prefix}?\\w+)\\s+((?:\\w)*)`, "g");
     // regex.lastIndex = 0;
     const matches = message.content.match(regex);
     // No matches
