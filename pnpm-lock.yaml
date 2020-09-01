@@ -1,11 +1,11 @@
 dependencies:
-  '@types/node': 14.0.27
   discord.js: 12.2.0
   node-fetch: 2.6.0
+  typescript: 3.9.7
   vm2: 3.9.2
 devDependencies:
+  '@types/node': 14.0.27
   ts-node-dev: 1.0.0-pre.57_typescript@3.9.7
-  typescript: 3.9.7
 lockfileVersion: 5.1
 packages:
   /@discordjs/collection/0.1.6:
@@ -23,7 +23,7 @@ packages:
     resolution:
       integrity: sha512-ZfFsbgEXW71Rw/6EtBdrP5VxBJy4dthyC0tpQKGKmYFImlmmrykO14Za+BiIVduwjte0jXEBlhSKf0MWbFp9Eg==
   /@types/node/14.0.27:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-kVrqXhbclHNHGu9ztnAwSncIgJv/FaxmzXJvGXNdcCpV1b8u1/Mi6z6m0vwy0LzKeXFTPLH0NzwmoJ3fNCIq0g==
   /@types/strip-bom/3.0.0:
@@ -749,7 +749,7 @@ packages:
     resolution:
       integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
   /typescript/3.9.7:
-    dev: true
+    dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true

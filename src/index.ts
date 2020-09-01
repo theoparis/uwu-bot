@@ -5,22 +5,22 @@ import { NodeVM } from "vm2";
 
 const client = new Discord.Client();
 const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout,
-	terminal: false,
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false,
 });
 
 let config: Config = {
-	token: "",
+    token: "",
 };
 try {
-	config = require("../config.json");
+    config = require("../config.json");
 } catch {
-	console.log("Failed to read config.json, using defaults.");
+    console.log("Failed to read config.json, using defaults.");
 }
 
 client.once("ready", () => {
-	console.log("Ready!");
+    console.log("Ready!");
 });
 
 client.login(process.env.TOKEN || config.token);
@@ -30,109 +30,106 @@ let channels = config.channels || [];
 const messages: Message[] = [];
 
 rl.on("line", (d) => {
-	try {
-		channels.forEach((currentChannel) => {
-			const channel = client.channels.cache.find(
-				(c: Channel) => c.id === currentChannel,
-			);
-			if (channel && channel.type === "text")
-				(channel as TextChannel).send(d);
-		});
-	} catch {}
+    try {
+        channels.forEach((currentChannel) => {
+            const channel = client.channels.cache.find(
+                (c: Channel) => c.id === currentChannel,
+            );
+            if (channel && channel.type === "text")
+                (channel as TextChannel).send(d);
+        });
+    } catch {}
 });
 
 client.on("message", async (message: Message) => {
-	if (message.author.id === client.user?.id) return;
-	const regex = new RegExp(`(${prefix}?\\w+)\\s+((?:\w)*)`, "g");
-	// regex.lastIndex = 0;
-	const matches = message.content.matchAll(regex);
-	// No matches
-	if (matches === null) return;
+    if (message.author.id === client.user?.id) return;
+    const regex = new RegExp(`(${prefix}?\\w+)\\s+((?:\w)*)`, "g");
+    // regex.lastIndex = 0;
+    const matches = message.content.match(regex);
+    // No matches
+    if (matches === null) return;
 
-	if (!channels[0]) channels[0] = message.channel.id;
+    if (!channels[0]) channels[0] = message.channel.id;
 
-	let result = "";
-	let vm: NodeVM | undefined;
+    let result = "";
+    let vm: NodeVM | undefined;
+    // for (let command of match) {
+    const command = matches[0].replace(prefix, "");
+    const rawMessage = matches[1];
+    const args = message.content.replace(matches[0], "").slice(1).split(" ");
+    // const commandRegex = new RegExp(`(${prefix}?\\w+)`);
+    // const rawMessage = command.replace(commandRegex, "");
+    console.log(`cmd: ${command}, msg: ${rawMessage}`);
+    if (command === "uwu") {
+        result += hewwwo(rawMessage);
+    } else if (command === "purge" && args[0]) {
+        if (message.channel.type == "text") {
+            try {
+                const messageCount = parseInt(args[0]) + 1 || 0;
+                if (messageCount !== 0) {
+                    const messages = await message.channel.messages.fetch({
+                        limit: messageCount,
+                    });
 
-	for (let match of matches) {
-		match = match.slice(1);
+                    message.channel.bulkDelete(messages);
 
-		// for (let command of match) {
-		const command = match[0].replace(prefix, "");
-		const rawMessage = match[1];
-		const args = message.content.replace(match[0], "").slice(1).split(" ");
-		// const commandRegex = new RegExp(`(${prefix}?\\w+)`);
-		// const rawMessage = command.replace(commandRegex, "");
-		console.log(`cmd: ${command}, msg: ${rawMessage}`);
-		if (command === "uwu") {
-			result += hewwwo(rawMessage);
-		} else if (command === "purge" && args[0]) {
-			if (message.channel.type == "text") {
-				try {
-					const messages = await message.channel.messages.fetch({
-						limit: parseInt(args[0]) + 1 || 0,
-					});
-					messages.forEach(async (d) => {
-						if (d && d.content !== message.content)
-							await d.delete();
-					});
-					result += `Purged ${args[0]} messages`;
-				} catch (e) {
-					result += "Purge error";
-					console.log(e);
-				}
-			}
-		} else if (command === "eval") {
-			try {
-				// Admin check to make sure user has perms to eval code with the bot object, otherwise don't include the bot object
-				if (
-					message.member &&
-					message.member.id ===
-						(process.env.BOT_OWNER ||
-							config.botOwner ||
-							"140296096839630848")
-				) {
-					if (process.env.DEBUG === "true" || config.debug === true)
-						console.log("Admin executed eval!");
-					vm = new NodeVM({
-						require: {
-							external: true,
-						},
-						sandbox: {
-							_bot: client,
-							_message: message,
-						},
-					});
-				} else
-					vm = new NodeVM({
-						require: {
-							external: true,
-						},
-					});
-				result += rawMessage;
-			} catch (e) {
-				result += e.toString();
-			}
-		}
-	}
+                    result += `Purged ${args[0]} messages`;
+                }
+            } catch (e) {
+                result += "Purge error";
+                console.log(e);
+            }
+        }
+    } else if (command === "eval") {
+        try {
+            // Admin check to make sure user has perms to eval code with the bot object, otherwise don't include the bot object
+            if (
+                message.member &&
+                message.member.id ===
+                    (process.env.BOT_OWNER ||
+                        config.botOwner ||
+                        "140296096839630848")
+            ) {
+                if (process.env.DEBUG === "true" || config.debug === true)
+                    console.log("Admin executed eval!");
+                vm = new NodeVM({
+                    require: {
+                        external: true,
+                    },
+                    sandbox: {
+                        _bot: client,
+                        _message: message,
+                    },
+                });
+            } else
+                vm = new NodeVM({
+                    require: {
+                        external: true,
+                    },
+                });
+            result += rawMessage;
+        } catch (e) {
+            result += e.toString();
+        }
+    }
 
-	if (result !== "") {
-		if (vm) {
-			result = await vm.run(
-				asyncify(
-					result
-						.replace(/(`|```)+.*(?:\s)/, "")
-						.replace(/```(\\s|\n)/, ""),
-				),
-				mainPath(),
-			)();
-			result = JSON.stringify(result);
-			if (result.trim() === "") result = "No reponse from code.";
-		}
+    if (result !== "") {
+        if (vm) {
+            result = await vm.run(
+                asyncify(
+                    result
+                        .replace(/(`|```)+.*(?:\s)/, "")
+                        .replace(/```(\\s|\n)/, ""),
+                ),
+                mainPath(),
+            )();
+            result = JSON.stringify(result);
+            if (result.trim() === "") result = "No reponse from code.";
+        }
 
-		// Code block check
-		if (!vm && result.includes("`")) return;
-		const msg = await message.channel.send(result);
-		messages.push(msg);
-	}
+        // Code block check
+        if (!vm && result.includes("`")) return;
+        const msg = await message.channel.send(result);
+        messages.push(msg);
+    }
 });
