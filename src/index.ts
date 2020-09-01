@@ -1,6 +1,11 @@
-import Discord, { Channel, Message, TextChannel } from "discord.js";
+import Discord, {
+    Channel,
+    Message,
+    MessageEmbed,
+    TextChannel,
+} from "discord.js";
 import readline from "readline";
-import { hewwwo, Config, asyncify, mainPath } from "./util";
+import { hewwwo, Config, asyncify, mainPath, addDefaultCommands } from "./util";
 import { NodeVM } from "vm2";
 
 const client = new Discord.Client();
@@ -18,6 +23,12 @@ try {
 } catch {
     console.log("Failed to read config.json, using defaults.");
 }
+
+let commands: Map<string, string> = new Map();
+
+addDefaultCommands(commands);
+
+if (config.commands) config.commands.forEach((c, k) => commands.set(k, c));
 
 client.once("ready", () => {
     console.log("Ready!");
@@ -64,7 +75,13 @@ client.on("message", async (message: Message) => {
         // const commandRegex = new RegExp(`(${prefix}?\\w+)`);
         // const rawMessage = command.replace(commandRegex, "");
         console.log(`cmd: ${command}, msg: ${rawMessage}`);
-        if (command === "uwu") {
+        if (command === commands.get("help")) {
+            let msg = `Commands: \n`;
+            for (let c in commands.values) {
+                msg += `- ${c}\n`;
+            }
+            message.channel.send(msg);
+        } else if (command === commands.get("uwu")) {
             result += hewwwo(rawMessage);
         } else if (command === "purge" && args[0]) {
             if (message.channel.type == "text") {
@@ -84,7 +101,7 @@ client.on("message", async (message: Message) => {
                     console.log(e);
                 }
             }
-        } else if (command === "eval") {
+        } else if (command === commands.get("eval")) {
             try {
                 // Admin check to make sure user has perms to eval code with the bot object, otherwise don't include the bot object
                 if (
