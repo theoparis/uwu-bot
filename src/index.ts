@@ -156,7 +156,7 @@ client.on("message", async (message: Message) => {
                     asyncify(
                         result.replace(
                             /(\s*```\w*\s*((?:[^`]|(?<!``)`)*)\s*```)/g,
-                            "&1",
+                            "$1",
                         ),
                     ),
                     mainPath(),
