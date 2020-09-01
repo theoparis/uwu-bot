@@ -166,7 +166,7 @@ client.on("message", async (message: Message) => {
                         : JSON.stringify(result);
                 if (result && result.trim() === "")
                     result = "No response from code.";
-                else result += log;
+                result += log;
             } catch (err) {
                 result = `Error: \n${err.message}`;
             }
