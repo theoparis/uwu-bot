@@ -73,7 +73,7 @@ client.on("message", async (message: Message) => {
 
         // for (let command of match) {
         const command = match[0].replace(prefix, "");
-        const rawMessage = match[1];
+        let rawMessage = match[1];
         const args = message.content.replace(match[0], "").slice(1).split(" ");
         // const commandRegex = new RegExp(`(${prefix}?\\w+)`);
         // const rawMessage = command.replace(commandRegex, "");
@@ -125,7 +125,7 @@ client.on("message", async (message: Message) => {
                             _message: message,
                             console: {
                                 log: (message: string) =>
-                                    (result += `${message}\n`),
+                                    (rawMessage += `${message}\n`),
                             },
                         },
                     });
@@ -137,7 +137,7 @@ client.on("message", async (message: Message) => {
                         sandbox: {
                             console: {
                                 log: (message: string) =>
-                                    (result += `${message}\n`),
+                                    (rawMessage += `${message}\n`),
                             },
                         },
                     });
